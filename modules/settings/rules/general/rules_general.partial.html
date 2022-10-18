@@ -1,0 +1,145 @@
+<!-- Rules General Page Start -->
+
+<div class="container-fluid">
+  <div class="text-right eml-action-bar">
+    <button type="submit"
+            form="scheduleSettingsForm"
+            class="btn"
+            ng-class="page.editing ? 'btn-info' : 'btn-default'"
+            ng-disabled="!page.editing"
+            ng-if="hasMgmtPermission()">{{ ::"app.SAVE" | translate }}
+    </button>
+  </div>
+
+  <form novalidate
+        id="scheduleSettingsForm"
+        name="scheduleSettingsForm"
+        ng-submit="scheduleSettingsForm.$valid && clickSave()">
+
+
+    <!-- Rules: General: Schedule Settings -->
+    <schedsettings settings-data="schedSet"
+                   has-permissions="hasMgmtPerm"
+                   modified-settings-data="schedSetModified"
+                   is-editing="page.editing"
+                   save-clicked="saveClicked"></schedsettings>
+
+
+    <!-- Rules: General: Other Settings -->
+    <div collapsable-panel
+         name="panels.general.title"
+         is-collapsable="true"
+         is-collapsed="false">
+
+      <div transclude-to="panel-head"></div>
+
+      <div transclude-to="panel-body">
+        <div class="row clearfix">
+          <div class="col-md-3 form-group">
+            <label for="generalAddress" class="">{{ ::"app.ADDRESS" | translate }}</label>
+            <input id="generalAddress"
+                   name="generalAddress"
+                   type="text"
+                   class="form-control"
+                   placeholder="Enter address"
+                   ng-disabled="!hasMgmtPermission()"
+                   ng-model="org.address"
+                   ng-change="updateEditing()"
+                   ng-required="true"
+                   required>
+
+            <div validate-messages messages-for="scheduleSettingsForm.generalAddress" submitted="scheduleSettingsForm.$submitted"></div>
+          </div>
+
+
+          <div class="col-md-2 form-group">
+            <label for="generalCity" class="">{{ ::"app.CITY" | translate }}</label>
+            <input id="generalCity"
+                   name="generalCity"
+                   type="text"
+                   class="form-control"
+                   placeholder="Enter city"
+                   ng-model="org.city"
+                   ng-disabled="!hasMgmtPermission()"
+                   ng-change="updateEditing()"
+                   ng-required="true"
+                   required>
+
+            <div validate-messages messages-for="scheduleSettingsForm.generalCity" submitted="scheduleSettingsForm.$submitted"></div>
+          </div>
+
+
+          <div class="col-md-2 form-group">
+            <label for="generalCountry" class="">{{ ::"app.COUNTRY" | translate }}</label>
+            <select id="generalCountry"
+                    name="generalCountry"
+                    class="form-control"
+                    ng-model="org.country"
+                    ng-options="country as country | translate
+                                            for country in panels.general.countries"
+                    ng-change="updateEditing()"
+                    ng-disabled="!hasMgmtPermission()"
+                    ng-required="true"
+                    required>
+            </select>
+
+            <div validate-messages messages-for="scheduleSettingsForm.generalCountry" submitted="scheduleSettingsForm.$submitted"></div>
+          </div>
+
+
+          <div class="col-md-2 form-group">
+            <label for="generaState" class="">{{ ::"app.STATE" | translate }}</label>
+            <input id="generaState"
+                   name="generaState"
+                   type="text"
+                   class="form-control"
+                   placeholder="Enter state"
+                   ng-model="org.state"
+                   ng-disabled="!hasMgmtPermission()"
+                   ng-change="updateEditing()"
+                   ng-required="true"
+                   required>
+
+            <div validate-messages messages-for="scheduleSettingsForm.generaState" submitted="scheduleSettingsForm.$submitted"></div>
+          </div>
+
+
+          <div class="col-md-1 form-group">
+
+            <label for="generalZip" class="">{{ ::"app.ZIP" | translate }}</label>
+            <input id="generalZip"
+                   name="generalZip"
+                   type="text"
+                   class="form-control"
+                   placeholder="Enter ZIP"
+                   ng-model="org.zip"
+                   ng-change="updateEditing()"
+                   ng-disabled="!hasMgmtPermission()"
+                   ng-minlength="5"
+                   ng-required="true"
+                   required>
+
+            <div validate-messages messages-for="scheduleSettingsForm.generalZip" submitted="scheduleSettingsForm.$submitted"></div>
+          </div>
+
+
+          <div class="col-md-1 form-group pull-right">
+
+            <label for="generalTimeZone" class="">{{ ::"app.TIME_ZONE" | translate }}</label>
+            <select id="generalTimeZone"
+                    name="generalTimeZone"
+                    class="form-control"
+                    ng-model="org.timeZone"
+                    ng-options="zone as zone | translate
+                                            for zone in timeZones"
+                    ng-disabled="!hasMgmtPermission()"
+                    ng-change="updateEditing()"
+                    ng-required="true"
+                    required>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end of Rules: General: Other Settings -->
+  </form>
+</div> <!-- end of Rules: General -->

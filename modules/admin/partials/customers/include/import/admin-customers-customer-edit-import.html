@@ -1,0 +1,426 @@
+<!--<div class="tab-content import-services">-->
+<div class="nav-panel top-margin-base">
+  <div class="row">
+    <div class="col-sm-12">
+      <a href class="customer-link" ng-click="goToCustomerListState()">< {{'admin.customers.BACK_TO_LISTING' | translate}}</a>
+    </div>
+  </div>
+</div>
+<div collapsable-panel is-collapsable="true" is-collapsed="false">
+  <div transclude-to="panel-head">
+    <div class="eml-panel-header-left">
+      <h4>{{'admin.customers.IMPORT_SERVICE_CONFIGURATION' | translate}}</h4>
+    </div>
+    <div class="eml-panel-header-right">
+      <button class="btn btn-default">{{'admin.customers.ADD_SERVICE' | translate}}</button>
+      <button class="btn btn-success">{{'app.SAVE' | translate}}</button>
+    </div>
+  </div>
+  <div transclude-to="panel-body">
+    <tabset>
+      <tab ng-repeat="subTab in subTabs" heading="{{subTab.tabHeading | translate}}" select="selectSubTab(subTab)"></tab>
+    </tabset>
+    <div class="tab-content employee-import" ng-if="subTabs[0].selected">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="pull-right">
+              <span class="row-title">{{'admin.customers.FILE_LOCATION' | translate}}:</span>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <select class="form-control">
+              <option value="s3location">S3 Location</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="ADDRESS">
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="ACCESS KEY">
+          </div>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="SECRET KEY">
+          </div>
+          <div class="col-sm-3">
+            <div class="pull-right">
+              <input type="checkbox" ng-model="configs.employee.active">
+              <span class="chk-label">
+                 {{'app.ACTIVE' | translate}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row panel-row">
+              <div class="col-sm-2">
+                <div class="pull-right">
+                  <span class="row-title">{{'admin.customers.FILE_PROPERTIES' | translate}}:</span>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="pull-right">
+                  <label class="cell-label">{{'admin.customers.ESCAPE_CHARACTER' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="cell-control">
+                  <select class="form-control">
+                    <option value="default">{{configs.employee.importFileProperties.ESCAPE}}</option>
+                  </select>
+                </div>
+                <div class="pull-right">
+                  <label class="cell-label">{{'admin.customers.SEPARATOR_CHARACTER' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <div class="cell-control">
+                  <select class="form-control">
+                    <option value="default">{{configs.employee.importFileProperties.SEPARATOR}}</option>
+                  </select>
+                </div>
+                <div class="pull-right">
+                  <label class="cell-label">{{'admin.customers.QUOTE_CHARACTER' | translate}}</label>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="cell-control">
+                  <select class="form-control">
+                    <option value="default">{{configs.employee.importFileProperties.QUOTE}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row panel-row">
+              <div class="col-sm-2">
+                <div class="pull-right">
+                  <span class="row-title">{{'admin.customers.IMPORT_MAPPING' | translate}}:</span>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <select class="form-control">
+                  <option data-ng-repeat="mappingFieldName in defaults.employee.mappingFields">{{mappingFieldName}}</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" placeholder="VALUE">
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control">
+                  <option value="default">VALUE</option>
+                </select>
+              </div>
+              <div class="col-sm-5">
+                <a href class="cell-btn-icon glyphicon glyphicon-remove-circle"></a>
+              </div>
+            </div>
+            <div class="row panel-row">
+              <div class="col-sm-1 col-sm-offset-2">
+                <select class="form-control">
+                  <option value="default">Key</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" placeholder="VALUE">
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control">
+                  <option value="default">VALUE</option>
+                </select>
+              </div>
+              <div class="col-sm-5">
+                <a href class="cell-btn-icon glyphicon glyphicon-remove-circle"></a>
+              </div>
+            </div>
+            <div class="row panel-row">
+              <div class="col-sm-1 col-sm-offset-2">
+                <select class="form-control">
+                  <option value="default">Key</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" placeholder="VALUE">
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control">
+                  <option value="default">VALUE</option>
+                </select>
+              </div>
+              <div class="col-sm-5">
+                <a href class="cell-btn-icon glyphicon glyphicon-plus-sign"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="pull-right">
+              <span class="row-title">{{'admin.customers.IMPORT_DATE' | translate}}:</span>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <span class="input-group import-date-calendar eml-datepicker-right">
+              <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" ng-model="importServices.employeeImport.importDate" is-open="datePickerOpened['importDate']" datepicker-options="datePickerOptions" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn eml-btn-grey-lightest eml-calendar-btn" ng-class="{ 'eml-calendar-opened' : datePickerOpened['importDate'] }" ng-click="openDatePicker($event, 'importDate')">
+                  <img src="/scheduler-server/emlogis/img/calendar.svg">
+                </button>
+              </span>
+            </span>
+          </div>
+          <div class="col-sm-1">
+            <div class="pull-right">
+              <span class="row-title">{{'admin.customers.IMPORT_TIME' | translate}}:</span>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <input type="text" class="form-control" placeholder="TIME">
+          </div>
+          <div class="col-sm-6">
+            <button type="button" class="btn btn-success">
+              <span class="glyphicon glyphicon-off"></span>
+            </button>
+            <div class="loader employee-import-loader" loader></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="pull-right">
+              <span class="row-title">{{'admin.customers.REPEAT' | translate}}:</span>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <select class="form-control">
+              <option value="default">Weekly</option>
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <span class="row-title">{{'admin.customers.EVERY' | translate}}:</span>
+            <div class="cell-control pull-right">
+              <select class="form-control">
+                <option value="default">1</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <span class="row-title week-days-label">{{'admin.customers.WEEKS_ON' | translate}}</span>
+            <span class="row-title week-days">
+              <span class="monday">M</span>
+              <span class="tuesday">T</span>
+              <span class="wednesday">W</span>
+              <span class="thursday">T</span>
+              <span class="friday">F</span>
+              <span class="saturday">S</span>
+              <span class="sunday">S</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" ng-if="subTabs[1].selected">
+      Content2
+    </div>
+    <div class="tab-content" ng-if="subTabs[2].selected">
+      Content3
+    </div>
+    <div class="tab-content" ng-if="subTabs[3].selected">
+      Content4
+    </div>
+    <div class="tab-content" ng-if="subTabs[4].selected">
+      Content5
+    </div>
+    <div class="tab-content" ng-if="subTabs[5].selected">
+      Content6
+    </div>
+  </div>
+</div>
+<div collapsable-panel is-collapsable="true" is-collapsed="false">
+  <div transclude-to="panel-head">
+    <div class="eml-panel-header-left">
+      <h4>{{'admin.customers.ADD_HOC_IMPORT' | translate}}</h4>
+    </div>
+    <div class="eml-panel-header-right">
+    </div>
+  </div>
+  <div transclude-to="panel-body">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="pull-right">
+            <span class="row-title">{{'admin.customers.IMPORT_TYPE' | translate}}:</span>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <select class="form-control">
+            <option value="default">Selected Import Type</option>
+          </select>
+        </div>
+        <div class="col-sm-8">
+          <div class="loader" loader></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="pull-right">
+            <span class="row-title">
+              <span class="file-name">file_name_v_long.csv</span>
+              <span class="grey-color file-size">(2.4Mb)</span>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-10">
+          <button type="button" class="btn btn-success">{{'admin.customers.PREVIEW' | translate}}</button>
+          <button type="button" class="btn btn-success">{{'admin.customers.IMPORT' | translate}}</button>
+          <button type="button" class="btn btn-default">{{'app.BROWSE' | translate}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="table-title">
+            <label class="grey-color">{{'admin.customers.TABLE_PREVIEW' | translate}}:</label>
+          </div>
+          <div class="table-body">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Column1</th>
+                    <th>Column2</th>
+                    <th>Column3</th>
+                    <th>Column4</th>
+                    <th>Column5</th>
+                    <th>Column6</th>
+                    <th>Column7</th>
+                    <th>Column8</th>
+                    <th>Column9</th>
+                    <th>Column10</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                  </tr>
+                  <tr>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                  </tr>
+                  <tr>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                  </tr>
+                  <tr>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                  </tr>
+                  <tr>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                    <td>Row Content</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div collapsable-panel is-collapsable="true" is-collapsed="false">
+  <div transclude-to="panel-head">
+    <div class="eml-panel-header-left">
+      <h4>{{'admin.customers.IMPORT_HISTORY' | translate}}</h4>
+    </div>
+    <div class="eml-panel-header-right"></div>
+  </div>
+  <div transclude-to="panel-body">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-2">
+          <div class="pull-left">
+            <div class="last-import-date">
+              <h5>Oct 4 2015, 12AM</h5>
+            </div>
+            <div class="last-import-label">
+              <span class="grey-color">Last Import</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="pull-right">
+            <div class="scheduled-next-import-date">
+              <h5>Oct 6 2015, 12AM</h5>
+            </div>
+            <div class="scheduled-next-import-label">
+              <span class="grey-color">Scheduled Next Import</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="import-history-list grid-panel">
+            <div ui-grid="importServices.importHistoryListGridOptions"
+                 ui-grid-resize-columns
+                 ui-grid-move-columns
+                 class="import-history-list-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--</div>-->

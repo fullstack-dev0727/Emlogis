@@ -1,0 +1,33 @@
+<div ng-controller="RulesOverwriteOrgCtrl as over">
+
+  <div id="eml-over-org">
+
+    <div class="row eml-action-bar">
+      <div class="col-xs-6">
+        <h3>{{ over.site.name }}: <span class="eml-action-bar-bold">{{ ::"rules.site_teams.SCHEDULING_SETTINGS" | translate }}</span></h3>
+      </div>
+      <div class="col-xs-6 text-right">
+        <div ng-if="hasMgmtPermission()">
+          <button type="button" ng-disabled="!over.isEditing" class="btn btn-primary" ng-click="over.saveClicked = true">
+            {{ ::"app.SAVE" | translate }}
+          </button>
+          <button type="button" ng-disabled="!over.schedSet.override" class="btn btn-default" ng-click="over.resetToOrgLevel()" translate>
+            {{ ::"rules.site_teams.RESET_SETTINGS" }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <!-- Content -->
+        <schedsettings settings-data="over.schedSet"
+                       has-permissions="over.hasMgmtPermission"
+                       modified-settings-data="schedSetModified"
+                       is-editing="over.isEditing"
+                       save-clicked="over.saveClicked"></schedsettings>
+      </div>
+    </div>
+  </div>
+</div>
